@@ -1,0 +1,16 @@
+package app.subscription.model;
+
+import lombok.Getter;
+
+@Getter
+public enum SubscriptionPeriod {
+    MONTHLY("Monthly (1 month)"),
+    YEARLY("Yearly (12 months)");
+
+    private final String displayName;
+
+    SubscriptionPeriod(String displayName) {
+        this.displayName = displayName;
+    }
+
+}
