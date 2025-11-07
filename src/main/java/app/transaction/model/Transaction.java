@@ -3,6 +3,7 @@ package app.transaction.model;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -53,5 +54,6 @@ public class Transaction {
     private String failureReason;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdOn;
 }

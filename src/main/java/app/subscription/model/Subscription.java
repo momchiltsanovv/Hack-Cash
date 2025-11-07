@@ -3,6 +3,7 @@ package app.subscription.model;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class Subscription {
     private boolean renewalAllowed;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column(nullable = false)

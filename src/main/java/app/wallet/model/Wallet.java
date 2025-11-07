@@ -3,6 +3,8 @@ package app.wallet.model;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -39,8 +41,10 @@ public class Wallet {
     private boolean main;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedOn;
 }
