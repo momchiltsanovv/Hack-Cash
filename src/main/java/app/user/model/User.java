@@ -52,7 +52,8 @@ public class User {
 
     private boolean active;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            updatable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
 

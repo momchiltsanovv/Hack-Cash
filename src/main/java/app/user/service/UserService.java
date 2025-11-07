@@ -145,7 +145,6 @@ public class UserService implements UserDetailsService {
 
         user.setActive(!user.isActive());
 
-        user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
     }
 
