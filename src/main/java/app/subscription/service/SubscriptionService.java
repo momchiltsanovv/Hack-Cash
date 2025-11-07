@@ -2,6 +2,7 @@ package app.subscription.service;
 
 //import app.notification.service.NotificationService;
 
+import app.notification.service.NotificationService;
 import app.subscription.model.Subscription;
 import app.subscription.model.SubscriptionPeriod;
 import app.subscription.model.SubscriptionStatus;
@@ -28,27 +29,28 @@ public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
     private final WalletService walletService;
-//    private final NotificationService notificationService;
+    private final NotificationService notificationService;
 
     @Autowired
-    public SubscriptionService(SubscriptionRepository subscriptionRepository, WalletService walletService ) {
+    public SubscriptionService(SubscriptionRepository subscriptionRepository, WalletService walletService,
+                               NotificationService notificationService) {
         this.subscriptionRepository = subscriptionRepository;
         this.walletService = walletService;
-//        this.notificationService = notificationService;
+        this.notificationService = notificationService;
     }
 
     public Subscription createDefaultSubscription(User user) {
 
         Subscription subscription = Subscription.builder()
-                .owner(user)
-                .status(SubscriptionStatus.ACTIVE)
-                .period(SubscriptionPeriod.MONTHLY)
-                .type(SubscriptionType.DEFAULT)
-                .price(BigDecimal.ZERO)
-                .renewalAllowed(true)
-                .createdOn(LocalDateTime.now())
-                .expiryOn(LocalDateTime.now().plusMonths(1))
-                .build();
+                                                .owner(user)
+                                                .status(SubscriptionStatus.ACTIVE)
+                                                .period(SubscriptionPeriod.MONTHLY)
+                                                .type(SubscriptionType.DEFAULT)
+                                                .price(BigDecimal.ZERO)
+                                                .renewalAllowed(true)
+                                                .createdOn(LocalDateTime.now())
+                                                .expiryOn(LocalDateTime.now().plusMonths(1))
+                                                .build();
 
         return subscriptionRepository.save(subscription);
     }
@@ -56,6 +58,7 @@ public class SubscriptionService {
     public Transaction upgrade(User user, UpgradeRequest upgradeRequest, SubscriptionType subscriptionType) {
 
         Optional<Subscription> currentlyActiveSubscriptionOpt = subscriptionRepository.findByStatusAndOwnerId(SubscriptionStatus.ACTIVE, user.getId());
+
         if (currentlyActiveSubscriptionOpt.isEmpty()) {
             throw new RuntimeException("No active subscription was found for user with id [%s]".formatted(user.getId()));
         }
@@ -64,6 +67,7 @@ public class SubscriptionService {
         // Upgrade request for Monthly (1 month) ULTIMATE
         String chargeDescription = "Upgrade request for %s %s".formatted(upgradeRequest.getPeriod().getDisplayName(), subscriptionType);
         Transaction chargeResultTransaction = walletService.withdrawal(user, upgradeRequest.getWalletId(), subscriptionPrice, chargeDescription);
+
         if (chargeResultTransaction.getStatus() == TransactionStatus.FAILED) {
             return chargeResultTransaction;
         }
@@ -82,15 +86,14 @@ public class SubscriptionService {
         }
 
         Subscription newActiveSubscription = Subscription.builder()
-                .owner(user)
-                .status(SubscriptionStatus.ACTIVE)
-                .period(upgradeRequest.getPeriod())
-                .type(subscriptionType)
-                .price(subscriptionPrice)
-                .renewalAllowed(upgradeRequest.getPeriod() == SubscriptionPeriod.MONTHLY)
-                .createdOn(now)
-                .expiryOn(expiryOn)
-                .build();
+                                                         .owner(user)
+                                                         .status(SubscriptionStatus.ACTIVE)
+                                                         .period(upgradeRequest.getPeriod())
+                                                         .type(subscriptionType)
+                                                         .price(subscriptionPrice)
+                                                         .renewalAllowed(upgradeRequest.getPeriod() == SubscriptionPeriod.MONTHLY)
+                                                         .expiryOn(expiryOn)
+                                                         .build();
 
         currentlyActiveSubscription.setStatus(SubscriptionStatus.COMPLETED);
         currentlyActiveSubscription.setExpiryOn(now);
@@ -98,26 +101,28 @@ public class SubscriptionService {
         subscriptionRepository.save(currentlyActiveSubscription);
         subscriptionRepository.save(newActiveSubscription);
 
-        String body = UPGRADE_EMAIL_BODY.formatted(newActiveSubscription.getType(), newActiveSubscription.getPeriod(), newActiveSubscription.getPrice(), expiryOn);
-//        notificationService.sendEmail(user.getId(), UPGRADE_EMAIL_SUBJECT, body);
+        String body = UPGRADE_EMAIL_BODY.formatted(newActiveSubscription.getType(),
+                                                   newActiveSubscription.getPeriod(),
+                                                   newActiveSubscription.getPrice(),
+                                                   expiryOn);
+
+        notificationService.sendEmail(user.getId(), UPGRADE_EMAIL_SUBJECT, body);
 
         return chargeResultTransaction;
     }
 
     private BigDecimal getUpgradePrice(SubscriptionType type, SubscriptionPeriod period) {
-
-        if (type == SubscriptionType.DEFAULT) {
-            return BigDecimal.ZERO;
-        } else if (type == SubscriptionType.PREMIUM && period == SubscriptionPeriod.MONTHLY) {
-            return new BigDecimal("19.99");
-        } else if (type == SubscriptionType.PREMIUM && period == SubscriptionPeriod.YEARLY) {
-            return new BigDecimal("199.99");
-        } else if (type == SubscriptionType.ULTIMATE && period == SubscriptionPeriod.MONTHLY) {
-            return new BigDecimal("49.99");
-        } else if (type == SubscriptionType.ULTIMATE && period == SubscriptionPeriod.YEARLY) {
-            return new BigDecimal("499.99");
-        }
-
-        throw new RuntimeException("Price not found for type [%s] and period [%s]".formatted(type, period));
+        return switch (type) {
+            case DEFAULT -> BigDecimal.ZERO;
+            case PREMIUM -> switch (period) {
+                case MONTHLY -> new BigDecimal("19.99");
+                case YEARLY -> new BigDecimal("199.99");
+            };
+            case ULTIMATE -> switch (period) {
+                case MONTHLY -> new BigDecimal("49.99");
+                case YEARLY -> new BigDecimal("499.99");
+            };
+        };
     }
+
 }

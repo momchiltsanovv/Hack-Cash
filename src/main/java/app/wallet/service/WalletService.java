@@ -58,15 +58,14 @@ public class WalletService {
         Wallet wallet = getById(walletId);
 
         Transaction transaction = Transaction.builder()
-                .owner(user)
-                .sender(wallet.getId().toString())
-                .receiver(SMART_WALLET_IDENTIFIER)
-                .amount(amount)
-                .currency(wallet.getCurrency())
-                .type(TransactionType.WITHDRAWAL)
-                .description(description)
-                .createdOn(LocalDateTime.now())
-                .build();
+                                             .owner(user)
+                                             .sender(wallet.getId().toString())
+                                             .receiver(SMART_WALLET_IDENTIFIER)
+                                             .amount(amount)
+                                             .currency(wallet.getCurrency())
+                                             .type(TransactionType.WITHDRAWAL)
+                                             .description(description)
+                                             .build();
 
         if (!isActiveWallet(wallet)) {
             transaction.setFailureReason(INACTIVE_WALLET_FAILURE_REASON);
@@ -87,12 +86,12 @@ public class WalletService {
             System.out.println("Thread in WalletService.java: " + threadName);
             // Event = Dto
             SuccessfulChargeEvent event = SuccessfulChargeEvent.builder()
-                    .userId(user.getId())
-                    .walletId(walletId)
-                    .amount(amount)
-                    .email(user.getEmail())
-                    .createdOn(LocalDateTime.now())
-                    .build();
+                                                               .userId(user.getId())
+                                                               .walletId(walletId)
+                                                               .amount(amount)
+                                                               .email(user.getEmail())
+                                                               .createdOn(LocalDateTime.now())
+                                                               .build();
             eventPublisher.publishEvent(event);
         }
 
@@ -103,7 +102,9 @@ public class WalletService {
 
     public boolean isWalletOwnedByUser(Wallet wallet, User user) {
 
-        return wallet.getOwner().getId().equals(user.getId());
+        return wallet.getOwner()
+                     .getId()
+                     .equals(user.getId());
     }
 
     public boolean isActiveWallet(Wallet wallet) {
@@ -114,16 +115,14 @@ public class WalletService {
     public boolean hasSufficientFunds(Wallet wallet, BigDecimal amount) {
 
         // Кога има достатъчно пари?
-        // Когато A > B
-        BigDecimal a = wallet.getBalance();
-        BigDecimal b = amount;
+        // Когато wallet.getBalance() > amount
 
         // a.compareTo(b)
         // result < 0 (а < b)
         // result = 0 (а = b)
         // result > 0 (a > b)
 
-        return a.compareTo(b) >= 0;
+        return  wallet.getBalance().compareTo(amount) >= 0;
     }
 
     @Transactional
@@ -134,55 +133,53 @@ public class WalletService {
         if (wallet.getStatus() == WalletStatus.INACTIVE) {
 
             return transactionService.createNewTransaction(wallet.getOwner(),
-                    SMART_WALLET_IDENTIFIER,
-                    wallet.getId().toString(),
-                    topUpAmount,
-                    wallet.getBalance(),
-                    wallet.getCurrency(),
-                    TransactionType.DEPOSIT,
-                    TransactionStatus.FAILED,
-                    description,
-                    INACTIVE_WALLET_FAILURE_REASON
-            );
+                                                           SMART_WALLET_IDENTIFIER,
+                                                           wallet.getId().toString(),
+                                                           topUpAmount,
+                                                           wallet.getBalance(),
+                                                           wallet.getCurrency(),
+                                                           TransactionType.DEPOSIT,
+                                                           TransactionStatus.FAILED,
+                                                           description,
+                                                           INACTIVE_WALLET_FAILURE_REASON
+                                                          );
         }
 
         wallet.setBalance(wallet.getBalance().add(topUpAmount));
-        wallet.setUpdatedOn(LocalDateTime.now());
 
         walletRepository.save(wallet);
 
         return transactionService.createNewTransaction(wallet.getOwner(),
-                SMART_WALLET_IDENTIFIER,
-                wallet.getId().toString(),
-                topUpAmount,
-                wallet.getBalance(),
-                wallet.getCurrency(),
-                TransactionType.DEPOSIT,
-                TransactionStatus.SUCCEEDED,
-                description,
-                null
-        );
+                                                       SMART_WALLET_IDENTIFIER,
+                                                       wallet.getId().toString(),
+                                                       topUpAmount,
+                                                       wallet.getBalance(),
+                                                       wallet.getCurrency(),
+                                                       TransactionType.DEPOSIT,
+                                                       TransactionStatus.SUCCEEDED,
+                                                       description,
+                                                       null
+                                                      );
     }
 
     public Wallet createDefaultWallet(User user) {
 
         Wallet wallet = Wallet.builder()
-                .owner(user)
-                .status(WalletStatus.ACTIVE)
-                .nickname(FIRST_WALLET_NICKNAME)
-                .balance(INITIAL_WALLET_BALANCE)
-                .currency(DEFAULT_WALLET_CURRENCY)
-                .createdOn(LocalDateTime.now())
-                .updatedOn(LocalDateTime.now())
-                .main(true)
-                .build();
+                              .owner(user)
+                              .status(WalletStatus.ACTIVE)
+                              .nickname(FIRST_WALLET_NICKNAME)
+                              .balance(INITIAL_WALLET_BALANCE)
+                              .currency(DEFAULT_WALLET_CURRENCY)
+                              .main(true)
+                              .build();
 
         return walletRepository.save(wallet);
     }
 
     private Wallet getById(UUID walletId) {
 
-        return walletRepository.findById(walletId).orElseThrow(() -> new RuntimeException("Wallet by id [%s] was not found.".formatted(walletId)));
+        return walletRepository.findById(walletId)
+                               .orElseThrow(() -> new RuntimeException("Wallet by id [%s] was not found.".formatted(walletId)));
     }
 
     // Transfer:
@@ -208,9 +205,9 @@ public class WalletService {
     private Wallet getPrimaryByUsername(String recipientUsername) {
 
         return walletRepository.findByOwnerUsername(recipientUsername).stream()
-                .filter(Wallet::isMain)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("[%s] doesn't have any primary wallets.".formatted(recipientUsername)));
+                               .filter(Wallet::isMain)
+                               .findFirst()
+                               .orElseThrow(() -> new RuntimeException("[%s] doesn't have any primary wallets.".formatted(recipientUsername)));
     }
 
     @Transactional
@@ -266,15 +263,13 @@ public class WalletService {
         }
 
         Wallet newWallet = Wallet.builder()
-                .owner(user)
-                .status(WalletStatus.ACTIVE)
-                .nickname(user.getWallets().size() == 1 ? SECOND_WALLET_NICKNAME : THIRD_WALLET_NICKNAME)
-                .balance(BigDecimal.ZERO)
-                .currency(DEFAULT_WALLET_CURRENCY)
-                .createdOn(LocalDateTime.now())
-                .updatedOn(LocalDateTime.now())
-                .main(false)
-                .build();
+                                 .owner(user)
+                                 .status(WalletStatus.ACTIVE)
+                                 .nickname(user.getWallets().size() == 1 ? SECOND_WALLET_NICKNAME : THIRD_WALLET_NICKNAME)
+                                 .balance(BigDecimal.ZERO)
+                                 .currency(DEFAULT_WALLET_CURRENCY)
+                                 .main(false)
+                                 .build();
 
         walletRepository.save(newWallet);
     }

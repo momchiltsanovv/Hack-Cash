@@ -16,6 +16,6 @@ public class GiftService {
 
         String threadName = Thread.currentThread().getName();
         System.out.println("Thread in GiftService.java: " + threadName);
-//        System.out.printf("Sending 1 € for charge compensation for user with email [%s].", event.getEmail());
+        System.out.printf("Sending 1 € for charge compensation for user with email [%s].", event.getEmail());
     }
 }

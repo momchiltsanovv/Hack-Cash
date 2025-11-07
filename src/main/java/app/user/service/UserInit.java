@@ -27,15 +27,15 @@ public class UserInit implements ApplicationRunner {
 
         List<User> users = userService.getAll();
 
-        boolean defaultUserDoesNotExist = users.stream().noneMatch(user -> user.getUsername().equals(userProperties.getDefaultUser().getUsername()));
+        boolean defaultUserDoesNotExist = users.stream()
+                                               .noneMatch(user -> user.getUsername().equals(userProperties.getDefaultUser().getUsername()));
 
         if (defaultUserDoesNotExist) {
-
             RegisterRequest registerRequest = RegisterRequest.builder()
-                    .username(userProperties.getDefaultUser().getUsername())
-                    .password(userProperties.getDefaultUser().getPassword())
-                    .country(userProperties.getDefaultUser().getCountry())
-                    .build();
+                                                             .username(userProperties.getDefaultUser().getUsername())
+                                                             .password(userProperties.getDefaultUser().getPassword())
+                                                             .country(userProperties.getDefaultUser().getCountry())
+                                                             .build();
             userService.register(registerRequest);
         }
     }

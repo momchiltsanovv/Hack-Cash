@@ -1,17 +1,17 @@
-package app.notification.client.dto;//package app.notification.client.dto;
-//
-//import lombok.Builder;
-//import lombok.Data;
-//
-//import java.util.UUID;
-//
-//@Data
-//@Builder
-//public class EmailRequest {
-//
-//    private UUID userId;
-//
-//    private String subject;
-//
-//    private String body;
-//}
+package app.notification.client.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.UUID;
+
+@Data
+@Builder
+public class EmailRequest {
+
+    private UUID userId;
+
+    private String subject;
+
+    private String body;
+}

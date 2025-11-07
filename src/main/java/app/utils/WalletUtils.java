@@ -15,9 +15,13 @@ public class WalletUtils {
         // PREMIUM и потфейлите са по-малки от 2
         // ULTIMATE и потфейлите са по-малки от 3
 
-        SubscriptionType subscriptionType = user.getSubscriptions().get(0).getType();
+        SubscriptionType subscriptionType = user.getSubscriptions()
+                                                .getFirst()
+                                                .getType();
+
         int walletsSize = user.getWallets().size();
 
-        return (subscriptionType == SubscriptionType.PREMIUM && walletsSize < 2) || (subscriptionType == SubscriptionType.ULTIMATE && walletsSize < 3);
+        return (subscriptionType == SubscriptionType.PREMIUM && walletsSize < 2) ||
+                (subscriptionType == SubscriptionType.ULTIMATE && walletsSize < 3);
     }
 }
