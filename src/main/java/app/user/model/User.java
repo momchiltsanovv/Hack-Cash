@@ -4,6 +4,8 @@ import app.subscription.model.Subscription;
 import app.wallet.model.Wallet;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,11 +27,14 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column
     private String firstName;
 
+    @Column
     private String lastName;
 
-    private String profilePicture;
+    @Column
+    private String profilePictureURL;
 
     @Column(unique = true)
     private String email;
@@ -48,16 +53,20 @@ public class User {
     private boolean active;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     @OrderBy("createdOn DESC")
+    @OneToMany(fetch = FetchType.EAGER,
+               mappedBy = "owner")
     private List<Subscription> subscriptions = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     @OrderBy("createdOn ASC")
+    @OneToMany(fetch = FetchType.EAGER,
+               mappedBy = "owner")
     private List<Wallet> wallets = new ArrayList<>();
 }

@@ -14,7 +14,7 @@ public class DtoMapper {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .profilePictureUrl(user.getProfilePicture())
+                .profilePictureUrl(user.getProfilePictureURL())
                 .build();
     }
 }

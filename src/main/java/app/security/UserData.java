@@ -19,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserData implements UserDetails {
 
+    public static final String ROLE_PREFIX = "ROLE_";
     private UUID userId;
     private String username;
     private String password;
@@ -34,7 +35,7 @@ public class UserData implements UserDetails {
 //        SimpleGrantedAuthority permission2 = new SimpleGrantedAuthority("do_transfer");
 //        SimpleGrantedAuthority permission3 = new SimpleGrantedAuthority("open_new_wallet");
 
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_PREFIX + role.name());
 //        List<SimpleGrantedAuthority> list = permissions.stream().map(permission -> new SimpleGrantedAuthority(permission)).toList();
 
         return List.of(authority);

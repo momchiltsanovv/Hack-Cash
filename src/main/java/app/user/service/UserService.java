@@ -120,7 +120,7 @@ public class UserService implements UserDetailsService {
         user.setFirstName(editProfileRequest.getFirstName());
         user.setLastName(editProfileRequest.getLastName());
         user.setEmail(editProfileRequest.getEmail());
-        user.setProfilePicture(editProfileRequest.getProfilePictureUrl());
+        user.setProfilePictureURL(editProfileRequest.getProfilePictureUrl());
 
         userRepository.save(user);
     }
