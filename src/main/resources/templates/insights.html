@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kate - Insights Dashboard</title>
+    <link rel="stylesheet" href="insights.css?v=2.0">
+</head>
+<body>
+    <div class="insights-container">
+        <!-- Header -->
+        <header class="insights-header">
+            <div class="header-left">
+                <a href="/" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Chat
+                </a>
+                <h1>Financial Insights</h1>
+            </div>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <nav class="insights-nav">
+            <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
+            <button class="nav-tab" data-tab="analysis">Analysis</button>
+            <button class="nav-tab" data-tab="planning">Planning</button>
+        </nav>
+
+        <!-- Tab Content Container -->
+        <div class="tab-container">
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab" class="tab-panel active">
+                <div class="panel-grid">
+                    <!-- Financial Health Card -->
+                    <div class="stat-card health-card">
+                        <h3>Financial Health Score</h3>
+                        <div class="health-score" id="healthScore">--</div>
+                        <p class="health-label">Out of 100</p>
+                    </div>
+
+                    <!-- Money Runway Card -->
+                    <div class="stat-card runway-card">
+                        <h3>Money Runway</h3>
+                        <div class="runway-days" id="runwayDays">--</div>
+                        <p class="runway-label">Days Remaining</p>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="panel-card quick-stats-card">
+                        <h3>Quick Stats</h3>
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">This Week's Spending</span>
+                                <span class="stat-value" id="weekSpending">$0.00</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Budget Status</span>
+                                <span class="stat-value" id="budgetStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div class="panel-card alerts-card">
+                        <h3>Alerts & Notifications</h3>
+                        <div id="alertsList" class="alerts-list">
+                            <p class="no-alerts">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analysisTab" class="tab-panel">
+                <div class="panel-grid">
+                    <!-- Spending Chart -->
+                    <div class="panel-card chart-card">
+                        <h3>Spending by Category</h3>
+                        <canvas id="spendingChart"></canvas>
+                    </div>
+
+                    <!-- Top Expenses -->
+                    <div class="panel-card expenses-card">
+                        <h3>Top Expenses</h3>
+                        <div id="topExpenses" class="top-expenses">
+                            <p class="no-data">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planning Tab -->
+            <div id="planningTab" class="tab-panel">
+                <div class="panel-grid">
+                    <!-- Wishlist / Things to Buy -->
+                    <div class="panel-card wishlist-card">
+                        <div class="card-header">
+                            <h3>🛍️ Wishlist & Planning</h3>
+                            <a href="/" class="btn-link">Add in Chat →</a>
+                        </div>
+                        <div id="wishlistSection" class="wishlist-section">
+                            <p class="no-data">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- Financial Goals -->
+                    <div class="panel-card goals-card">
+                        <div class="card-header">
+                            <h3>💰 Savings Goals</h3>
+                            <a href="/" class="btn-link">Set in Chat →</a>
+                        </div>
+                        <div id="goalsSection" class="goals-section">
+                            <p class="no-data">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- Student Loans -->
+                    <div class="panel-card loans-card">
+                        <div class="card-header">
+                            <h3>📚 Student Loans</h3>
+                            <a href="/" class="btn-link">Track in Chat →</a>
+                        </div>
+                        <div id="loansSection" class="loans-section">
+                            <p class="no-data">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="insights.js"></script>
+</body>
+</html>
