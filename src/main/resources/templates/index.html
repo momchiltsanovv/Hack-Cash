@@ -1,29 +1,290 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="">
+<head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/common.css">
   <link rel="stylesheet" type="text/css" href="/css/index.css">
-  <title>Home</title>
+  <title>SmartWallet - Your Digital Money Hub</title>
 </head>
 <body>
+<div class="stars"></div>
+<div class="stars2"></div>
+
 <header class="header">
   <div class="header-inner">
+    <div class="logo-small">
+      <img src="/images/smart-wallet-text-only.png" alt="SmartWallet">
+    </div>
     <nav class="nav">
       <a href="/login" class="button login">Login</a>
-      <a href="/register" class="button register">Register</a>
+      <a href="/register" class="button register">Get Started</a>
     </nav>
   </div>
 </header>
+
 <main>
-  <div class="logo-container">
-    <a href="/" class="logo-big">
-      <img src="/images/smart-wallet-high-resolution-logo-transparent.png" alt="Logo Image">
-    </a>
-  </div>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-icon">✨</span>
+        <span>Built for Students, by Students</span>
+      </div>
+      <h1 class="hero-title">
+        Manage Your Money<br>
+        <span class="gradient-text">Like a Pro</span>
+      </h1>
+      <p class="hero-subtitle">
+        The smartest digital wallet designed exclusively for students.
+        Track expenses, split bills, and achieve your financial goals with ease.
+      </p>
+      <div class="hero-buttons">
+        <a href="/register" class="btn btn-primary">
+          Start Free Today
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="#features" class="btn btn-secondary">
+          See Features
+          <span class="btn-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-image-wrapper">
+        <img src="/images/floating_cards.png" alt="SmartWallet Cards" class="floating-image">
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Partnership Partners</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">25K+</div>
+        <div class="stat-label">Active Students</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">$5M+</div>
+        <div class="stat-label">Transactions Processed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Satisfaction Rate</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="your-way">
+    <div class="your-way-container">
+      <div class="your-way-content">
+        <h2 class="section-title">Your Money, Your Way</h2>
+        <p class="section-description">
+          Take control of your finances with tools designed to fit your lifestyle.
+          Whether you're saving for a trip, splitting rent with roommates, or tracking
+          daily expenses, SmartWallet adapts to your needs.
+        </p>
+        <div class="your-way-features">
+          <div class="way-feature">
+            <div class="way-icon">💳</div>
+            <div>
+              <h3>Flexible Payments</h3>
+              <p>Send, receive, and manage money on your terms</p>
+            </div>
+          </div>
+          <div class="way-feature">
+            <div class="way-icon">📊</div>
+            <div>
+              <h3>Smart Budgeting</h3>
+              <p>Set goals and track spending automatically</p>
+            </div>
+          </div>
+          <div class="way-feature">
+            <div class="way-icon">🎯</div>
+            <div>
+              <h3>Custom Categories</h3>
+              <p>Organize expenses exactly how you want</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="your-way-visual">
+        <div class="way-card card-purple">
+          <div class="card-label">Monthly Budget</div>
+          <div class="card-value">$1,250</div>
+          <div class="card-progress">
+            <div class="progress-bar" style="width: 68%;"></div>
+          </div>
+          <div class="card-footer">68% spent this month</div>
+        </div>
+        <div class="way-card card-orange">
+          <div class="card-label">Savings Goal</div>
+          <div class="card-value">$2,450</div>
+          <div class="card-chart">📈</div>
+          <div class="card-footer">+12% this week</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guarantee">
+    <div class="guarantee-container">
+      <h2 class="section-title centered">Our Guarantee to You</h2>
+      <p class="section-subtitle centered">Your trust is our priority. Here's what we promise</p>
+      <div class="guarantee-grid">
+        <div class="guarantee-card">
+          <div class="guarantee-icon">🔒</div>
+          <h3>Bank-Level Security</h3>
+          <p>256-bit encryption and multi-factor authentication keep your money safe 24/7</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">💰</div>
+          <h3>Zero Hidden Fees</h3>
+          <p>Complete transparency. What you see is what you pay - no surprises, ever</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">⚡</div>
+          <h3>Instant Support</h3>
+          <p>Get help when you need it with our 24/7 student support team</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">🎁</div>
+          <h3>Student Rewards</h3>
+          <p>Exclusive cashback and discounts with partner brands you already love</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">📱</div>
+          <h3>Always Available</h3>
+          <p>Access your wallet anytime, anywhere with our mobile-first design</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">✨</div>
+          <h3>100% Free to Start</h3>
+          <p>No credit card required. Start managing money smarter today</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <div class="steps-container">
+      <h2 class="section-title centered">Our Easy Steps For Registration</h2>
+      <p class="section-subtitle centered">Get started in less than 2 minutes</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Create Your Account</h3>
+            <p>Sign up with just your email or student ID. No paperwork, no hassle.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Verify Your Identity</h3>
+            <p>Quick verification to keep your account secure. Takes less than 30 seconds.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Start Managing Money</h3>
+            <p>Add funds, track expenses, and unlock all features immediately.</p>
+          </div>
+        </div>
+      </div>
+      <div class="steps-cta">
+        <a href="/register" class="btn btn-primary btn-large">
+          Get Started Now
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="section-header">
+      <h2 class="section-title">Choose Your Plan</h2>
+      <p class="section-subtitle">Flexible options that grow with your needs</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3 class="pricing-title">Default</h3>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount">0</span>
+            <span class="price-period">/month</span>
+          </div>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ 1 Digital Wallet</li>
+          <li>✓ Basic Transactions</li>
+          <li>✓ Expense Tracking</li>
+          <li>✓ Email Support</li>
+        </ul>
+        <a href="/register" class="btn btn-outline">Start Free</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="popular-badge">Most Popular</div>
+        <div class="pricing-header">
+          <h3 class="pricing-title">Premium</h3>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount">5</span>
+            <span class="price-period">/month</span>
+          </div>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ 2 Digital Wallets</li>
+          <li>✓ Priority Transfers</li>
+          <li>✓ Advanced Analytics</li>
+          <li>✓ Budget Goals</li>
+          <li>✓ 24/7 Support</li>
+        </ul>
+        <a href="/register" class="btn btn-primary">Get Premium</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3 class="pricing-title">Ultimate</h3>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount">10</span>
+            <span class="price-period">/month</span>
+          </div>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ 3 Digital Wallets</li>
+          <li>✓ Instant Transfers</li>
+          <li>✓ AI-Powered Insights</li>
+          <li>✓ Custom Categories</li>
+          <li>✓ VIP Support</li>
+          <li>✓ Exclusive Rewards</li>
+        </ul>
+        <a href="/register" class="btn btn-outline">Go Ultimate</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Take Control of Your Finances?</h2>
+      <p class="cta-subtitle">Join thousands of students already saving smarter</p>
+      <a href="/register" class="btn btn-primary btn-large">
+        Create Free Account
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </section>
 </main>
-<th:block th:insert="fragments/my-fragments :: my-website-footer"></th:block>
-</body></html>
+
+<th:block th:insert="~{fragments/my-fragments :: my-website-footer}"></th:block>
+</body>
+</html>

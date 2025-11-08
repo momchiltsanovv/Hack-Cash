@@ -1,51 +1,203 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="">
+<head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/common.css">
   <link rel="stylesheet" type="text/css" href="/css/form.css">
-  <title>Register</title>
+  <title>Register - SmartWallet</title>
 </head>
 <body>
+<div class="stars"></div>
+<div class="stars2"></div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo-small">
+      <img src="/images/smart-wallet-text-only.png" alt="SmartWallet">
+    </a>
+    <nav class="nav">
+      <a href="/login" class="button login">Login</a>
+    </nav>
+  </div>
+</header>
 
 <main>
   <section class="section full-height">
+    <div class="form-container">
+      <div class="form-card">
+        <div class="form-header">
+          <h2 class="form-title">Start Your Journey</h2>
+          <p class="form-subtitle">Join thousands of smart students</p>
+        </div>
 
-    <div class="container">
-      <a href="/" class="logo-big">
-        <img src="/images/smart-wallet-text-only.png" alt="Logo Image">
-      </a>
+        <p class="alert-error" th:if="${errorMessage}" th:text="${errorMessage}">Error message</p>
+
+        <form class="form" th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" placeholder="Choose a username" id="username" th:field="*{username}">
+            </div>
+            <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error message</p>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" placeholder="Create a strong password" id="password" th:field="*{password}" class="password-input">
+              <span class="toggle-password" onclick="togglePassword()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </span>
+            </div>
+            <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error message</p>
+
+            <div class="password-requirements">
+              <p class="requirements-title">Password must contain:</p>
+              <ul class="requirements-list">
+                <li id="req-length" class="requirement">
+                  <span class="req-icon">✓</span>
+                  <span class="req-text">At least 8 characters</span>
+                </li>
+                <li id="req-uppercase" class="requirement">
+                  <span class="req-icon">✓</span>
+                  <span class="req-text">One uppercase letter</span>
+                </li>
+                <li id="req-lowercase" class="requirement">
+                  <span class="req-icon">✓</span>
+                  <span class="req-text">One lowercase letter</span>
+                </li>
+                <li id="req-number" class="requirement">
+                  <span class="req-icon">✓</span>
+                  <span class="req-text">One number</span>
+                </li>
+                <li id="req-special" class="requirement">
+                  <span class="req-icon">✓</span>
+                  <span class="req-text">One special character (!@#$%^&*)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="country">Country</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🌍</span>
+              <select id="country" th:field="*{country}">
+                <option th:each="country : ${T(app.user.model.Country).values()}" th:value="${country}" th:text="${country.getDisplayName()}">Country</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="form-submit">
+            Create Account
+            <span class="btn-arrow">→</span>
+          </button>
+
+          <p class="form-already">Already have an account? <a href="/login">Login here</a></p>
+        </form>
+      </div>
+
+      <div class="form-features">
+        <h3 class="features-title">What You Get</h3>
+        <div class="feature-item">
+          <div class="feature-icon">🎉</div>
+          <div class="feature-content">
+            <h4>Free to Start</h4>
+            <p>No credit card required, start managing money today</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔐</div>
+          <div class="feature-content">
+            <h4>Secure & Safe</h4>
+            <p>Bank-level encryption keeps your data protected</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🚀</div>
+          <div class="feature-content">
+            <h4>Quick Setup</h4>
+            <p>Get started in less than 2 minutes</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <form class="form" th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
-
-      <h3>Register Here</h3>
-
-      <label for="username">Username</label>
-      <input type="text" placeholder="Username" id="username" th:field="*{username}">
-      <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error message</p>
-
-      <label for="password">Password</label>
-      <input type="password" placeholder="Password" id="password" th:field="*{password}">
-      <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error message</p>
-
-      <label for="country">Country</label>
-      <select id="country" th:field="*{country}">
-        <option th:each="country : ${T(app.user.model.Country).values()}" th:value="${country}" th:text="${country.getDisplayName()}">abv</option>
-      </select>
-
-      <button>Register</button>
-      <p class="form-already">Already have an account? <a href="/login">Login</a>!</p>
-    </form>
-
   </section>
 </main>
-<th:block th:insert="fragments/my-fragments :: my-website-footer"></th:block>
+
+<th:block th:insert="~{fragments/my-fragments :: my-website-footer}"></th:block>
+
+<script>
+  const passwordInput = document.getElementById('password');
+  const passwordRequirements = document.querySelector('.password-requirements');
+  const reqLength = document.getElementById('req-length');
+  const reqUppercase = document.getElementById('req-uppercase');
+  const reqLowercase = document.getElementById('req-lowercase');
+  const reqNumber = document.getElementById('req-number');
+
+  const reqSpecial = document.getElementById('req-special');
+
+  // Password visibility toggle
+  function togglePassword() {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+  }
+
+  // Password validation
+  passwordInput.addEventListener('input', function() {
+    const password = this.value;
+
+    // Show requirements when user starts typing
+    if (password.length > 0) {
+      passwordRequirements.classList.add('visible');
+    } else {
+      passwordRequirements.classList.remove('visible');
+    }
+
+    // Check length (at least 8 characters)
+    if (password.length >= 8) {
+      reqLength.classList.add('valid');
+    } else {
+      reqLength.classList.remove('valid');
+    }
+
+    // Check uppercase
+    if (/[A-Z]/.test(password)) {
+      reqUppercase.classList.add('valid');
+    } else {
+      reqUppercase.classList.remove('valid');
+    }
+
+    // Check lowercase
+    if (/[a-z]/.test(password)) {
+      reqLowercase.classList.add('valid');
+    } else {
+      reqLowercase.classList.remove('valid');
+    }
+
+    // Check number
+    if (/[0-9]/.test(password)) {
+      reqNumber.classList.add('valid');
+    } else {
+      reqNumber.classList.remove('valid');
+    }
+
+    // Check special character
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      reqSpecial.classList.add('valid');
+    } else {
+      reqSpecial.classList.remove('valid');
+    }
+  });
+</script>
 </body>
 </html>

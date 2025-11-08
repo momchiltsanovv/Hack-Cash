@@ -5,126 +5,183 @@
 
 body {
   margin: 0;
-  background-size: cover;
-  background: radial-gradient(circle at 90% top,
-  #2b2a57 0%,
-  #27264e 10%,
-  #222246 20%,
-  #1e1d3d 30%,
-  #1a1934 40%,
-  #16152c 50%,
-  #111123 60%,
-  #0d0d1a 70%,
-  #090811 80%,
-  #040409 90%,
-  #000000 100%) no-repeat fixed;
+  background: #0a0a1f;
+  background: radial-gradient(ellipse at bottom, #2d1b4e 0%, #0f0616 100%);
+  min-height: 100vh;
   font-style: normal;
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
   letter-spacing: 0.5px;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  overflow-x: hidden;
 }
 
+/* Starfield Background */
+.stars, .stars2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars {
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="10" cy="10" r="1" fill="white" opacity="0.8"/><circle cx="40" cy="30" r="1" fill="white" opacity="0.6"/><circle cx="70" cy="50" r="1" fill="white" opacity="0.9"/><circle cx="20" cy="70" r="1" fill="white" opacity="0.7"/><circle cx="90" cy="80" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+  animation: animateStars 100s linear infinite;
+}
+
+.stars2 {
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><circle cx="30" cy="20" r="2" fill="white" opacity="0.4"/><circle cx="120" cy="80" r="1" fill="white" opacity="0.6"/><circle cx="160" cy="140" r="1.5" fill="white" opacity="0.5"/><circle cx="80" cy="160" r="1" fill="white" opacity="0.7"/></svg>') repeat;
+  animation: animateStars 150s linear infinite;
+}
+
+@keyframes animateStars {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-1000px);
+  }
+}
+
+/* Header */
 .header {
-  padding: 2% 6%;
+  padding: 24px 6%;
+  position: relative;
+  z-index: 100;
 }
 
 .header-inner {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo-small {
+  max-width: 180px;
+}
+
+.logo-small img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-.header-inner .nav {
-  margin-left: auto;
+  gap: 16px;
 }
 
 .button {
   display: inline-block;
   text-decoration: none;
-  appearance: none;
-  padding: 10px 15px;
-  background-color: transparent;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
   color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #f1f5ff;
-  transition: box-shadow 0.2s ease;
-  box-shadow: inset 0 1px 9px rgba(255, 255, 255, 0.5); /* Inset shadow with transparency */
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.button.login:hover, .button.register:hover {
-  background: radial-gradient(circle at 90% top, #746ab0 0%, #6a61a4 10%, #605899 20%, #56508d 30%, #4c477f 40%, #423f73 50%, #383666 60%, #2e2d5a 70%, #24244d 80%, #1a1a41 90%, #101035 100%);
-  color: white;
-  box-shadow: inset 0 1px 9px rgba(255, 255, 255, 0.8); /* Inset shadow with transparency */
+.button.login {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
-
-.logo-big {
-  display: inline-block;
-  max-width: 700px;
+.button.login:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-.logo-big img {
-  display: inline-block;
-  width: 100%;
-  height: auto;
+.button.register {
+  background: linear-gradient(135deg, #9333ea 0%, #fb923c 100%);
+  border: none;
+  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4);
 }
 
+.button.register:hover {
+  box-shadow: 0 12px 32px rgba(147, 51, 234, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Main content wrapper */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Footer */
 .footer {
-  color: rgba(255, 255, 255, 0.69);
+  color: rgba(255, 255, 255, 0.5);
   text-align: center;
-  margin-top: auto;
-  font-family: 'Poppins', sans-serif;
+  padding: 40px 6%;
+  font-size: 14px;
   font-weight: 300;
-  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+  margin-top: 100px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Alert Messages */
 .alert-warning {
   font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.5px;
-  background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
-  background-size: 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 16px 0;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 107, 0.3);
 }
 
 p.alert-warning {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
-  background-size: 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 5px 0 0;
+  margin: 16px 0;
+  color: white;
 }
 
 p.succeeded-message {
   font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.5px;
-  background: linear-gradient(to left, #a1f88e, #67f569, #3bf55a);
-  background-size: 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 5px 0 0;
+  background: linear-gradient(135deg, #51cf66, #37b24d);
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 16px 0;
+  color: white;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(81, 207, 102, 0.3);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 4%;
+  }
+
+  .logo-small {
+    max-width: 140px;
+  }
+
+  .button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 }
