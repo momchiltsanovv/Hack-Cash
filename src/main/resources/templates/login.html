@@ -1,56 +1,112 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="">
+<head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/common.css">
   <link rel="stylesheet" type="text/css" href="/css/form.css">
-  <title>Login</title>
+  <title>Login - SmartWallet</title>
 </head>
 <body>
+<div class="stars"></div>
+<div class="stars2"></div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo-small">
+      <img src="/images/smart-wallet-text-only.png" alt="SmartWallet">
+    </a>
+    <nav class="nav">
+      <a href="/register" class="button register">Get Started</a>
+    </nav>
+  </div>
+</header>
 
 <main>
   <section class="section full-height">
+    <div class="form-container">
+      <div class="form-card">
+        <div class="form-header">
+          <h2 class="form-title">Welcome Back!</h2>
+          <p class="form-subtitle">Login to manage your finances</p>
+        </div>
 
-    <div class="container">
-      <a href="/" class="logo-big">
-        <img src="/images/smart-wallet-text-only.png" alt="Logo Image">
-      </a>
+        <p class="succeeded-message" th:if="${successfulRegistration}" th:text="${successfulRegistration}"></p>
+        <p class="alert-warning" th:if="${param.error}">Invalid username or password</p>
+        <p class="alert-warning" th:if="${inactiveAccountMessage}" th:text="${inactiveAccountMessage}"></p>
+        <p class="alert-warning" th:if="${loginAttemptMessage}" th:text="${loginAttemptMessage}"></p>
+
+        <form class="form" th:action="@{/login}" method="POST">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" placeholder="Enter your username" id="username" name="username" autocomplete="username" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" placeholder="Enter your password" id="password" name="password" autocomplete="current-password" class="password-input" required>
+              <span class="toggle-password" onclick="togglePassword()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </span>
+            </div>
+          </div>
+
+          <button type="submit" class="form-submit">
+            Log In
+            <span class="btn-arrow">→</span>
+          </button>
+
+          <p class="form-already">Don't have an account? <a href="/register">Create one now</a></p>
+        </form>
+      </div>
+
+      <div class="form-features">
+        <h3 class="features-title">Why Choose SmartWallet?</h3>
+        <div class="feature-item">
+          <div class="feature-icon">💎</div>
+          <div class="feature-content">
+            <h4>Student-Focused</h4>
+            <p>Built specifically for student needs and budgets</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-content">
+            <h4>Instant Transfers</h4>
+            <p>Send and receive money in seconds</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📊</div>
+          <div class="feature-content">
+            <h4>Smart Insights</h4>
+            <p>Track spending and achieve financial goals</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Steps to handle form submission:   -->
-    <!-- 1. Form action (request endpoint)  -->
-    <!-- 2. Request method (http method)  -->
-    <!-- 3. Fill the object/dto  -->
-    <form class="form" th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
-
-      <h3>Login Here</h3>
-
-      <p class="succeeded-message" th:text="${successfulRegistration}"></p>
-      <p class="alert-warning" th:text="${errorMessage}"></p>
-      <p class="alert-warning" th:text="${inactiveAccountMessage}"></p>
-      <p class="alert-warning" th:if="${loginAttemptMessage}" th:text="${loginAttemptMessage}"></p>
-      <label for="username">Username</label>
-      <input type="text" placeholder="Username" id="username" th:field="*{username}">
-      <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid username</p>
-
-      <label for="password">Password</label>
-      <input type="password" placeholder="Password" id="password" th:field="*{password}">
-      <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid password</p>
-
-      <button type="submit">Log In</button>
-
-      <p class="form-already">Don't have an account? <a href="/register">Register now</a>!</p>
-
-    </form>
-
   </section>
 </main>
-<th:block th:insert="fragments/my-fragments :: my-website-footer"></th:block>
+
+<th:block th:insert="~{fragments/my-fragments :: my-website-footer}"></th:block>
+
+<script>
+  function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+  }
+</script>
 </body>
 </html>
