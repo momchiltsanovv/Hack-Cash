@@ -3,6 +3,7 @@ package app.wallet.model;
 import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -34,6 +35,10 @@ public class Wallet {
 
     @Column(nullable = false)
     private BigDecimal balance;
+
+    @Column(nullable = false)
+    @ColumnDefault("0.00")
+    private BigDecimal cashback;
 
     @Column(nullable = false)
     private Currency currency;

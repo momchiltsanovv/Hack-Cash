@@ -35,6 +35,7 @@ public class WalletService {
     private static final String THIRD_WALLET_NICKNAME = "Pulse Pay";
 
     private static final BigDecimal INITIAL_WALLET_BALANCE = new BigDecimal("20.00");
+    private static final BigDecimal CASHBACK_RATE = new BigDecimal("0.015"); // 1.5%
 
     private static final Map<String, Map<String, BigDecimal>> EXCHANGE_RATES = Map.of(
             "EUR", Map.of(
@@ -101,6 +102,23 @@ public class WalletService {
         } else {
             transaction.setStatus(TransactionStatus.SUCCEEDED);
             wallet.setBalance(wallet.getBalance().subtract(amount));
+            
+            BigDecimal cashbackAmount = amount.multiply(CASHBACK_RATE);
+            Wallet primaryWallet = getPrimaryWallet(user);
+            
+            if (!wallet.getCurrency().equals(primaryWallet.getCurrency())) {
+                BigDecimal exchangeRate = EXCHANGE_RATES.get(wallet.getCurrency().getCurrencyCode())
+                                                        .get(primaryWallet.getCurrency().getCurrencyCode());
+                cashbackAmount = cashbackAmount.multiply(exchangeRate);
+            }
+            
+            if (primaryWallet.getCashback() == null) {
+                primaryWallet.setCashback(BigDecimal.ZERO);
+            }
+            primaryWallet.setCashback(primaryWallet.getCashback().add(cashbackAmount));
+            primaryWallet.setUpdatedOn(LocalDateTime.now());
+            walletRepository.save(primaryWallet);
+            
             wallet.setUpdatedOn(LocalDateTime.now());
             walletRepository.save(wallet);
 
@@ -191,6 +209,7 @@ public class WalletService {
                               .status(WalletStatus.ACTIVE)
                               .nickname(FIRST_WALLET_NICKNAME)
                               .balance(INITIAL_WALLET_BALANCE)
+                              .cashback(BigDecimal.ZERO)
                               .currency(currency)
                               .main(true)
                               .build();
@@ -239,6 +258,11 @@ public class WalletService {
                                .filter(Wallet::isMain)
                                .findFirst()
                                .orElseThrow(() -> new RuntimeException("[%s] doesn't have any primary wallets.".formatted(recipientUsername)));
+    }
+
+    private Wallet getPrimaryWallet(User user) {
+        return walletRepository.findByOwner_IdAndMain(user.getId(), true)
+                               .orElseThrow(() -> new RuntimeException("User [%s] doesn't have any primary wallets.".formatted(user.getId())));
     }
 
     @Transactional
@@ -298,6 +322,7 @@ public class WalletService {
                                  .status(WalletStatus.ACTIVE)
                                  .nickname(user.getWallets().size() == 1 ? SECOND_WALLET_NICKNAME : THIRD_WALLET_NICKNAME)
                                  .balance(BigDecimal.ZERO)
+                                 .cashback(BigDecimal.ZERO)
                                  .currency(currency)
                                  .main(false)
                                  .build();

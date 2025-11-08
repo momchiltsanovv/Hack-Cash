@@ -101,7 +101,11 @@ public class IndexController {
 
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("primaryWallet", user.getWallets().stream().filter(Wallet::isMain).findFirst().get());
+        modelAndView.addObject("primaryWallet", user.getWallets()
+                                                    .stream()
+                                                    .filter(Wallet::isMain)
+                                                    .findFirst()
+                                                    .get());
 
         return modelAndView;
     }
