@@ -1,17 +1,24 @@
 package app.user.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Country {
-    BULGARIA("Bulgaria"),
-    FRANCE("France"),
-    GERMANY("Germany");
+    BULGARIA("Bulgaria", "BGN"),
+    GERMANY("Germany", "EUR"),
+    INDIA("India", "INR"),
+    UK("United Kingdom", "GBP");
 
-    private String displayName;
 
-    Country(String displayName) {
+    private final String displayName;
+    private final String currencyCode;
+
+    Country(String displayName, String currencyCode) {
         this.displayName = displayName;
+        this.currencyCode = currencyCode;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 }

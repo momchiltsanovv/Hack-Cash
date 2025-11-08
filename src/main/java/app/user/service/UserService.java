@@ -26,10 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Currency;
 
 @Slf4j
 @Service
@@ -72,7 +72,8 @@ public class UserService implements UserDetailsService {
                 .build();
 
         user = userRepository.save(user);
-        Wallet defaultWallet = walletService.createDefaultWallet(user);
+        Currency defaultCurrency = Currency.getInstance(user.getCountry().getCurrencyCode());
+        Wallet defaultWallet = walletService.createDefaultWallet(user, defaultCurrency);
         Subscription defaultSubscription = subscriptionService.createDefaultSubscription(user);
 
         user.setWallets(List.of(defaultWallet));

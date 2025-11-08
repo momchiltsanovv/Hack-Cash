@@ -2,18 +2,24 @@ package app.web;
 
 import app.security.UserData;
 import app.transaction.model.Transaction;
+import app.user.model.Country;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.utils.WalletUtils;
 import app.wallet.service.WalletService;
+import app.web.dto.UnlockWalletRequest;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Arrays;
+import java.util.Currency;
 
 @Controller
 @RequestMapping("/wallets")
@@ -37,15 +43,22 @@ public class WalletController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("isEligibleToUnlock", WalletUtils.isEligibleToUnlockNewWallet(user));
         modelAndView.addObject("transactionsByWalletId", transactionsByWalletId);
+        modelAndView.addObject("unlockWalletRequest", new UnlockWalletRequest());
+        modelAndView.addObject("countries", Arrays.asList(Country.values()));
 
         return modelAndView;
     }
 
     @PostMapping
-    public String unlock(@AuthenticationPrincipal UserData userData) {
+    public String unlock(@Valid UnlockWalletRequest unlockWalletRequest, BindingResult bindingResult, @AuthenticationPrincipal UserData userData) {
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/wallets";
+        }
 
         User user = userService.getById(userData.getUserId());
-        walletService.unlockNewWallet(user);
+        Currency currency = Currency.getInstance(unlockWalletRequest.getCurrencyCode());
+        walletService.unlockNewWallet(user, currency);
 
         return "redirect:/wallets";
     }

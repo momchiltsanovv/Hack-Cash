@@ -30,10 +30,10 @@ public class NotificationService {
     public void upsertPreference(UUID userId, boolean notificationsEnabled, String email) {
 
         UpsertPreferenceRequest dto = UpsertPreferenceRequest.builder()
-                .userId(userId)
-                .notificationEnabled(notificationsEnabled)
-                .contactInfo(email)
-                .build();
+                                                             .userId(userId)
+                                                             .notificationEnabled(notificationsEnabled)
+                                                             .contactInfo(email)
+                                                             .build();
 
 
         try {
@@ -65,17 +65,20 @@ public class NotificationService {
         ResponseEntity<List<Email>> response = client.getNotificationHistory(userId);
 
         return response.getBody() != null
-                ? response.getBody().stream().limit(5).toList()
+                ? response.getBody()
+                          .stream()
+                          .limit(5)
+                          .toList()
                 : Collections.emptyList();
     }
 
     public void sendEmail(UUID userId, String subject, String body) {
 
         EmailRequest dto = EmailRequest.builder()
-                .userId(userId)
-                .subject(subject)
-                .body(body)
-                .build();
+                                       .userId(userId)
+                                       .subject(subject)
+                                       .body(body)
+                                       .build();
 
         try {
             client.sendEmail(dto);
