@@ -41,23 +41,23 @@ public class WalletService {
                     "BGN", new BigDecimal("1.95583"),
                     "INR", new BigDecimal("89.70"),
                     "GBP", new BigDecimal("0.85")
-            ),
+                         ),
             "BGN", Map.of(
                     "EUR", new BigDecimal("0.51129"),
                     "INR", new BigDecimal("45.86"),
                     "GBP", new BigDecimal("0.43")
-            ),
+                         ),
             "INR", Map.of(
                     "EUR", new BigDecimal("0.011"),
                     "BGN", new BigDecimal("0.0217"),
                     "GBP", new BigDecimal("0.0094")
-            ),
+                         ),
             "GBP", Map.of(
                     "EUR", new BigDecimal("1.17"),
                     "BGN", new BigDecimal("2.34"),
                     "INR", new BigDecimal("106.33")
-            )
-    );
+                         )
+                                                                                     );
 
     private final WalletRepository walletRepository;
     private final TransactionService transactionService;
@@ -144,7 +144,7 @@ public class WalletService {
         // result = 0 (а = b)
         // result > 0 (a > b)
 
-        return  wallet.getBalance().compareTo(amount) >= 0;
+        return wallet.getBalance().compareTo(amount) >= 0;
     }
 
     @Transactional
@@ -322,8 +322,7 @@ public class WalletService {
         if (transaction.getType() == TransactionType.WITHDRAWAL) {
             UUID walletId = UUID.fromString(transaction.getSender());
             return getById(walletId);
-        }
-        else if (transaction.getType() == TransactionType.DEPOSIT) {
+        } else if (transaction.getType() == TransactionType.DEPOSIT) {
             UUID walletId = UUID.fromString(transaction.getReceiver());
             return getById(walletId);
         }
