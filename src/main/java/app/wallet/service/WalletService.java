@@ -36,6 +36,29 @@ public class WalletService {
 
     private static final BigDecimal INITIAL_WALLET_BALANCE = new BigDecimal("20.00");
 
+    private static final Map<String, Map<String, BigDecimal>> EXCHANGE_RATES = Map.of(
+            "EUR", Map.of(
+                    "BGN", new BigDecimal("1.95583"),
+                    "INR", new BigDecimal("89.70"),
+                    "GBP", new BigDecimal("0.85")
+            ),
+            "BGN", Map.of(
+                    "EUR", new BigDecimal("0.51129"),
+                    "INR", new BigDecimal("45.86"),
+                    "GBP", new BigDecimal("0.43")
+            ),
+            "INR", Map.of(
+                    "EUR", new BigDecimal("0.011"),
+                    "BGN", new BigDecimal("0.0217"),
+                    "GBP", new BigDecimal("0.0094")
+            ),
+            "GBP", Map.of(
+                    "EUR", new BigDecimal("1.17"),
+                    "BGN", new BigDecimal("2.34"),
+                    "INR", new BigDecimal("106.33")
+            )
+    );
+
     private final WalletRepository walletRepository;
     private final TransactionService transactionService;
 
@@ -192,10 +215,19 @@ public class WalletService {
         Wallet senderWallet = getById(transferRequest.getWalletId());
         Wallet receiverWallet = getPrimaryByUsername(transferRequest.getRecipientUsername());
 
-        String transferDescription = TRANSFER_DESCRIPTION_FORMAT.formatted(senderWallet.getOwner().getUsername(), receiverWallet.getOwner().getUsername(), transferRequest.getAmount());
+        String transferDescription = TRANSFER_DESCRIPTION_FORMAT.formatted(senderWallet.getOwner().getUsername(),
+                                                                           receiverWallet.getOwner().getUsername(),
+                                                                           transferRequest.getAmount());
         Transaction withdrawalTransaction = withdrawal(senderWallet.getOwner(), senderWallet.getId(), transferRequest.getAmount(), transferDescription);
         if (withdrawalTransaction.getStatus() == TransactionStatus.SUCCEEDED) {
-            deposit(receiverWallet.getId(), transferRequest.getAmount(), transferDescription);
+            BigDecimal amountToDeposit = transferRequest.getAmount();
+            if (!senderWallet.getCurrency().equals(receiverWallet.getCurrency())) {
+                BigDecimal exchangeRate = EXCHANGE_RATES.get(senderWallet.getCurrency().getCurrencyCode())
+                                                        .get(receiverWallet.getCurrency().getCurrencyCode());
+
+                amountToDeposit = amountToDeposit.multiply(exchangeRate);
+            }
+            deposit(receiverWallet.getId(), amountToDeposit, transferDescription);
         }
 
         return withdrawalTransaction;
@@ -284,5 +316,20 @@ public class WalletService {
         }
 
         return transactionsByWalletId;
+    }
+
+    public Wallet getWalletByTransaction(Transaction transaction) {
+        if (transaction.getType() == TransactionType.WITHDRAWAL) {
+            UUID walletId = UUID.fromString(transaction.getSender());
+            return getById(walletId);
+        }
+        else if (transaction.getType() == TransactionType.DEPOSIT) {
+            UUID walletId = UUID.fromString(transaction.getReceiver());
+            return getById(walletId);
+        }
+
+        throw new RuntimeException("Unable to determine wallet for transaction type: " + transaction.getType());
+
+
     }
 }

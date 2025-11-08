@@ -122,7 +122,7 @@
           </div>
           <div class="details">
             <span class="item">Amount:</span>
-            <span class="value" th:text="${transaction.amount + ' EUR'}">2.04 EUR</span>
+              <span class="value" th:text="${transaction.amount} + ' ' + ${wallet.currency.currencyCode}">2.04 EUR</span>
           </div>
         </div>
       </div>
