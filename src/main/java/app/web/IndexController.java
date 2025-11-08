@@ -38,7 +38,9 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage(@RequestParam(name = "loginAttemptMessage", required = false) String message, @RequestParam(name = "error", required = false) String errorMessage, HttpSession session) {
+    public ModelAndView getLoginPage(@RequestParam(name = "loginAttemptMessage", required = false) String message,
+                                     @RequestParam(name = "error", required = false) String errorMessage,
+                                     HttpSession session) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
