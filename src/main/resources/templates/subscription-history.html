@@ -122,9 +122,8 @@
             <p th:text="${subscription.type}">DEFAULT</p>
           </td>
           <td>
-            <p th:if="${subscription.status.name() == 'ACTIVE'}" class="status active">ACTIVE</p>
-            <p th:if="${subscription.status.name() == 'COMPLETED'}" class="status completed">COMPLETED</p>
-            <p th:if="${subscription.status.name() == 'TERMINATED'}" class="status terminated">TERMINATED</p>
+            <p th:if="${subscription.status.name() == 'ACTIVE'}"><span class="status active">ACTIVE</span></p>
+            <p th:if="${subscription.status.name() == 'TERMINATED'}"><span class="status terminated">TERMINATED</span></p>
           </td>
           <td th:text="${subscription.period.getDisplayName()}">MONTHLY</td>
           <td th:text="${subscription.price}">49.99</td>

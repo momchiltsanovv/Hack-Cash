@@ -179,7 +179,12 @@
       </div>
     </div>
 
-    <form class="wallet-block new-wallet" th:if="${isEligibleToUnlock}" th:action="@{/wallets}" th:method="POST">
+    <form class="wallet-block new-wallet" th:if="${isEligibleToUnlock}" th:action="@{/wallets}" th:method="POST" th:object="${unlockWalletRequest}">
+      <label for="currency">Choose Currency</label>
+      <select id="currency" name="currencyCode" required="" th:field="*{currencyCode}">
+        <option value="" disabled="" selected="">Select Currency</option>
+        <option th:each="country : ${countries}" th:value="${country.currencyCode}" th:text="${country.currencyCode}"></option>
+      </select>
       <button type="submit"></button>
     </form>
 

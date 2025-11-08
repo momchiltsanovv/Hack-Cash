@@ -73,7 +73,6 @@ public class SubscriptionService {
         }
 
         // 1. Create new active subscription
-        // 2. Complete their current active subscription
         Subscription currentlyActiveSubscription = currentlyActiveSubscriptionOpt.get();
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiryOn;
@@ -95,7 +94,7 @@ public class SubscriptionService {
                                                          .expiryOn(expiryOn)
                                                          .build();
 
-        currentlyActiveSubscription.setStatus(SubscriptionStatus.COMPLETED);
+        currentlyActiveSubscription.setStatus(SubscriptionStatus.TERMINATED);
         currentlyActiveSubscription.setExpiryOn(now);
 
         subscriptionRepository.save(currentlyActiveSubscription);

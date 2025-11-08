@@ -154,7 +154,7 @@
         <p th:if="${primaryWallet.status.name() == 'INACTIVE'}" class="inactive-wallet-status">INACTIVE</p>
       </div>
       <div class="wallet-balance">
-        <p class="balance" th:text="${primaryWallet.balance + ' EUR'}">18.07 EUR</p>
+        <p class="balance" th:text="${primaryWallet.balance + ' ' + primaryWallet.currency.currencyCode}">18.07 EUR</p>
         <p class="available-balance-text">Available Balance</p>
       </div>
 
@@ -185,7 +185,6 @@
         <tbody>
         <tr>
           <td th:if="${user.subscriptions[0].status.name() == 'ACTIVE'}"><span class="status active">ACTIVE</span></td>
-          <td th:if="${user.subscriptions[0].status.name() == 'COMPLETED'}"><span class="status completed">COMPLETED</span></td>
           <td th:if="${user.subscriptions[0].status.name() == 'TERMINATED'}"><span class="status terminated">TERMINATED</span></td>
           <td th:text="${user.subscriptions[0].period}">Monthly</td>
           <td th:text="${user.subscriptions[0].price + ' EUR'}">49.99 EUR</td>
