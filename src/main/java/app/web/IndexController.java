@@ -83,13 +83,24 @@ public class IndexController {
     public ModelAndView register(@Valid RegisterRequest registerRequest, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("register");
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("register");
+            modelAndView.addObject("registerRequest", registerRequest);
+            return modelAndView;
         }
 
-        userService.register(registerRequest);
-        redirectAttributes.addFlashAttribute("successfulRegistration", "You have registered successfully");
-
-        return new ModelAndView("redirect:/login");
+        try {
+            userService.register(registerRequest);
+            redirectAttributes.addFlashAttribute("successfulRegistration", "You have registered successfully");
+            return new ModelAndView("redirect:/login");
+        } catch (RuntimeException e) {
+            // Handle username already exists error
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("register");
+            modelAndView.addObject("registerRequest", registerRequest);
+            modelAndView.addObject("errorMessage", e.getMessage());
+            return modelAndView;
+        }
     }
 
     @GetMapping("/home")

@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
 
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionalUser.isPresent()) {
-            throw new RuntimeException("User with [%s] username already exist.".formatted(registerRequest.getUsername()));
+            throw new RuntimeException("User with this username already exist.");
         }
 
         User user = User.builder()

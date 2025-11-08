@@ -34,7 +34,7 @@
           <p class="form-subtitle">Join thousands of smart students</p>
         </div>
 
-        <p class="alert-error" th:if="${errorMessage}" th:text="${errorMessage}">Error message</p>
+        <p class="alert-warning" th:if="${errorMessage}" th:text="${errorMessage}">Error message</p>
 
         <form class="form" th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
           <div class="form-group">
