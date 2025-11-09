@@ -84,6 +84,33 @@
                                       stroke-width="2" d="M8 20V7m0 13-4-4m4 4 4-4m4-12v13m0-13 4 4m-4-4-4 4"></path>
                             </svg>
                         </a>
+                        <a href="/memory">
+                            <p>Memory Match</p>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="M14.304 4.844l2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565L16.48 2.48a2.017 2.017 0 0 1 2.852 0Z"></path>
+                            </svg>
+                        </a>
+                        <a href="/spendquest">
+                            <p>SpendQuest</p>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="M14.304 4.844l2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565L16.48 2.48a2.017 2.017 0 0 1 2.852 0Z"></path>
+                            </svg>
+                        </a>
+                        <a href="/ai/chat">
+                            <p>AI Chatbot</p>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="M7 9h5m3 0h2M7 12h2m3 0h5M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.616a1 1 0 0 0-.67.257l-2.88 2.592A.5.5 0 0 1 8 18.477V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"></path>
+                            </svg>
+                        </a>
                     </div>
                     <div class="func-block">
                         <span>Utility</span>
@@ -146,7 +173,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2>Notification Dashboard</h2>
+                <h2>Notification Dashboard</h2>
                         <p class="section-subtitle">Manage your notification preferences</p>
                     </div>
                 </div>
@@ -175,8 +202,8 @@
                         <div class="preference-content">
                             <span class="preference-label">Source</span>
                             <span class="preference-value" th:text="${preference.contactInfo}">user@example.com</span>
-                        </div>
                     </div>
+                </div>
 
                     <div class="preference-card stat-card success">
                         <div class="preference-icon">
@@ -202,7 +229,7 @@
                         <div class="preference-content">
                             <span class="preference-label">Failed</span>
                             <span class="preference-value stat-value" th:text="${failedEmailsCount}">2</span>
-                        </div>
+                </div>
                     </div>
 
                     <div class="preference-card status-card">
@@ -223,43 +250,43 @@
                                 </svg>
                                 DISABLED
                             </span>
-                        </div>
+                </div>
                     </div>
                 </div>
 
                 <div class="actions-section">
                     <h3 class="actions-title">Change State</h3>
-                    <div class="allowed-notification-actions">
-                        <form th:if="${preference.notificationEnabled}" th:action="@{/notifications/disable}" method="POST">
-                            <button type="submit" class="profile-actions-button disable-notifications">
+                <div class="allowed-notification-actions">
+                    <form th:if="${preference.notificationEnabled}" th:action="@{/notifications/disable}" method="POST">
+                        <button type="submit" class="profile-actions-button disable-notifications">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                            </svg>
                                 <span>Disable Notifications</span>
-                            </button>
-                        </form>
-                        <form th:unless="${preference.notificationEnabled}" th:action="@{/notifications/enable}" method="POST">
-                            <button type="submit" class="profile-actions-button enable-notifications">
+                        </button>
+                    </form>
+                    <form th:unless="${preference.notificationEnabled}" th:action="@{/notifications/enable}" method="POST">
+                        <button type="submit" class="profile-actions-button enable-notifications">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                            </svg>
                                 <span>Enable Notifications</span>
-                            </button>
-                        </form>
+                        </button>
+                    </form>
                     </div>
                 </div>
 
                 <div class="actions-section">
                     <h3 class="actions-title">General Actions</h3>
-                    <div class="allowed-notification-actions">
-                        <form th:action="@{/notifications/clear}" method="POST">
+                <div class="allowed-notification-actions">
+                    <form th:action="@{/notifications/clear}" method="POST">
                             <button type="submit" class="profile-actions-button clear-history">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                            </svg>
                                 <span>Clear History</span>
-                            </button>
-                        </form>
+                        </button>
+                    </form>
                     </div>
                 </div>
 
@@ -284,15 +311,15 @@
                         </svg>
                     </div>
                     <div>
-                        <h2>Notification History</h2>
+                <h2>Notification History</h2>
                         <p class="section-subtitle">Your recent notification activity</p>
                     </div>
                 </div>
 
                 <div class="table-container" th:unless="${#lists.isEmpty(lastEmails)}">
                     <table class="notification-table">
-                        <thead>
-                        <tr>
+                    <thead>
+                    <tr>
                             <th>
                                 <div class="table-header-content">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -329,9 +356,9 @@
                                     Type
                                 </div>
                             </th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    </tr>
+                    </thead>
+                    <tbody>
                         <tr th:each="email : ${lastEmails}" class="notification-row">
                             <td class="subject-cell">
                                 <div class="subject-content">
@@ -357,7 +384,7 @@
                                     </svg>
                                     Failed
                                 </span>
-                            </td>
+                        </td>
                             <td class="type-cell">
                                 <span class="type-badge">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -366,10 +393,10 @@
                                     </svg>
                                     Email
                                 </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 </div>
 
                 <div class="empty-state" th:if="${#lists.isEmpty(lastEmails)}">

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "aiClient", url = "http://localhost:5000")
+@FeignClient(name = "aiClient", url = "http://localhost:5051")
 public interface AIClientFeign {
 
     @PostMapping("/api/chat")
