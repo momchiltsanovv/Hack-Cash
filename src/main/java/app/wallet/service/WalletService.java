@@ -126,7 +126,6 @@ public class WalletService {
             if (wallet.getCashback() == null) {
                 wallet.setCashback(BigDecimal.ZERO);
             }
-            wallet.setCashback(wallet.getCashback().add(cashbackAmount));
             wallet.setBalance(wallet.getBalance().add(cashbackAmount));
             walletRepository.save(wallet);
 
