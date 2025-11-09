@@ -1,0 +1,50 @@
+<div id="map-screen">
+  <h2>Spend & Earn Quest 🗺️</h2>
+
+  <p id="coin-count">Coins: 0 / 55</p>
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+  </div>
+
+  <div id="map-path">
+    <div class="node" data-level="1"></div>
+    <div class="node" data-level="2"></div>
+    <div class="node" data-level="3"></div>
+    <div class="node" data-level="4"></div>
+    <div class="node" data-level="5"></div>
+    <div class="node" data-level="6"></div>
+    <div class="node" data-level="7"></div>
+    <div class="node" data-level="8"></div>
+  </div>
+
+  <div id="task-panel" class="hidden">
+    <p id="task-text"></p>
+    <button id="choice-a"></button>
+    <button id="choice-b"></button>
+  </div>
+</div>
+
+<!-- 💵 Money Bill Reward Overlay -->
+<div id="vault-overlay" class="hidden">
+  <div id="money-bill">
+    <div class="bill-pattern"></div>
+    <div class="bill-content">
+      <div class="bill-header">
+        <div class="bill-seal">🏆</div>
+      </div>
+      <div class="bill-reward">
+        <p class="reward-label">YOUR REWARD:</p>
+        <p id="reward-text" class="reward-text"></p>
+      </div>
+      <div class="bill-footer">
+        <div class="bill-signature">SpendQuest</div>
+        <button id="claim-reward">Claim Reward</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link th:href="@{/css/games/map.css}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script th:src="@{/js/games/map.js}"></script>
+

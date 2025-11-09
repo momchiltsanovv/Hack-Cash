@@ -16,7 +16,11 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.authorizeHttpRequests(matcher -> matcher
+        httpSecurity
+                .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/memory/**")
+        )
+                .authorizeHttpRequests(matcher -> matcher
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/register", "/error").permitAll()
 //                        .requestMatchers("/admin-panel").hasRole("ADMIN")

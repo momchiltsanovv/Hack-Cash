@@ -110,6 +110,7 @@
           <p th:if="${user.isActive()}" class="active-profile">ACTIVE</p>
           <p th:if="${!user.isActive()}" class="inactive-profile">INACTIVE</p>
           <p th:text="${user.role}" class="user-role-box">USER_ROLE</p>
+          <p class="profile-points">Points: <span th:text="${user.points}">0</span></p>
         </div>
         <div class="details-section">
           <div class="details-section-container">
