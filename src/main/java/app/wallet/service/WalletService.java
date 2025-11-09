@@ -103,23 +103,31 @@ public class WalletService {
             transaction.setStatus(TransactionStatus.SUCCEEDED);
             wallet.setBalance(wallet.getBalance().subtract(amount));
             
+            // Calculate cashback amount
             BigDecimal cashbackAmount = amount.multiply(CASHBACK_RATE);
             Wallet primaryWallet = getPrimaryWallet(user);
             
+            // Convert cashback to primary wallet currency for tracking
+            BigDecimal cashbackForTracking = cashbackAmount;
             if (!wallet.getCurrency().equals(primaryWallet.getCurrency())) {
                 BigDecimal exchangeRate = EXCHANGE_RATES.get(wallet.getCurrency().getCurrencyCode())
                                                         .get(primaryWallet.getCurrency().getCurrencyCode());
-                cashbackAmount = cashbackAmount.multiply(exchangeRate);
+                cashbackForTracking = cashbackAmount.multiply(exchangeRate);
             }
-            
+
+            // Update primary wallet cashback tracking
             if (primaryWallet.getCashback() == null) {
                 primaryWallet.setCashback(BigDecimal.ZERO);
             }
-            primaryWallet.setCashback(primaryWallet.getCashback().add(cashbackAmount));
-            primaryWallet.setUpdatedOn(LocalDateTime.now());
+            primaryWallet.setCashback(primaryWallet.getCashback().add(cashbackForTracking));
             walletRepository.save(primaryWallet);
             
-            wallet.setUpdatedOn(LocalDateTime.now());
+            // Add cashback to the wallet that made the withdrawal (in its own currency)
+            if (wallet.getCashback() == null) {
+                wallet.setCashback(BigDecimal.ZERO);
+            }
+            wallet.setCashback(wallet.getCashback().add(cashbackAmount));
+            wallet.setBalance(wallet.getBalance().add(cashbackAmount));
             walletRepository.save(wallet);
 
             String threadName = Thread.currentThread().getName();
