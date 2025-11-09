@@ -1,0 +1,187 @@
+/* Users Page Styles */
+
+.toggle-form {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.toggle-switch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: relative;
+    width: 56px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #ffffff, #e2e8f0);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    left: 2px;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(16, 185, 129, 0.8));
+    border-color: rgba(34, 197, 94, 0.6);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider::before {
+    transform: translateX(24px);
+    background: linear-gradient(135deg, #ffffff, #f0fdf4);
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.5);
+}
+
+.toggle-switch input[type="checkbox"]:not(:checked) + .toggle-slider {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.8));
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-switch.toggle-switch-role input[type="checkbox"]:checked + .toggle-slider {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(124, 58, 237, 0.8));
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-switch.toggle-switch-role input[type="checkbox"]:checked + .toggle-slider::before {
+    box-shadow: 0 2px 6px rgba(139, 92, 246, 0.5);
+}
+
+.toggle-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+.toggle-icon-on {
+    left: 4px;
+    opacity: 0;
+    transform: scale(0.5);
+    color: #22c55e;
+}
+
+.toggle-icon-off {
+    right: 4px;
+    opacity: 1;
+    transform: scale(1);
+    color: #ef4444;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider .toggle-icon-on {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider .toggle-icon-off {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.toggle-switch input[type="checkbox"]:not(:checked) + .toggle-slider .toggle-icon-on {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.toggle-switch input[type="checkbox"]:not(:checked) + .toggle-slider .toggle-icon-off {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.toggle-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    min-width: 60px;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.toggle-switch:hover .toggle-slider {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider + .toggle-label {
+    color: #4ade80;
+}
+
+.toggle-switch.toggle-switch-role input[type="checkbox"]:checked + .toggle-slider + .toggle-label {
+    color: #a78bfa;
+}
+
+.toggle-switch input[type="checkbox"]:not(:checked) + .toggle-slider + .toggle-label {
+    color: #f87171;
+}
+
+.toggle-switch:active .toggle-slider {
+    transform: scale(0.95);
+}
+
+/* Table cell styling for toggle switches */
+.styled-table td:has(.toggle-switch) {
+    text-align: center;
+    padding: 16px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .toggle-switch {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .toggle-label {
+        text-align: center;
+        min-width: auto;
+        font-size: 12px;
+    }
+
+    .toggle-slider {
+        width: 48px;
+        height: 28px;
+    }
+
+    .toggle-slider::before {
+        width: 20px;
+        height: 20px;
+    }
+
+    .toggle-switch input[type="checkbox"]:checked + .toggle-slider::before {
+        transform: translateX(20px);
+    }
+}
+

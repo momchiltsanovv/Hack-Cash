@@ -11,7 +11,8 @@
   <link rel="stylesheet" type="text/css" href="/css/home-common.css">
   <link rel="stylesheet" type="text/css" href="/css/home.css">
   <link rel="stylesheet" type="text/css" href="/css/subscription-history.css">
-  <title>Transactions</title>
+  <link rel="stylesheet" type="text/css" href="/css/users.css">
+  <title>Users</title>
 </head>
 <body>
 <nav>
@@ -146,26 +147,46 @@
           </td>
           <td th:text="${#temporals.format(user.createdOn, 'dd MMM YYYY HH:mm')}">11 Dec 2024 21:09</td>
           <td>
-            <!--            /users/4531a4c8-87d0-4e47-a42a-532ec4e85451/status-->
-            <form th:action="@{'/users/' + ${user.id} + '/status'}" th:method="PATCH">
-              <button class="profile-actions-button">
-                <p>Switch</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                     class="bi bi-toggle-on" viewBox="0 0 16 16">
-                  <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-                </svg>
-              </button>
+            <form th:action="@{'/users/' + ${user.id} + '/status'}" th:method="PATCH" class="toggle-form">
+              <label class="toggle-switch">
+                <input type="checkbox" th:checked="${user.active}" onchange="this.form.submit()">
+                <span class="toggle-slider">
+                  <span class="toggle-icon toggle-icon-on">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="toggle-icon toggle-icon-off">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </span>
+                <span class="toggle-label" th:text="${user.active ? 'Active' : 'Inactive'}">Active</span>
+              </label>
             </form>
           </td>
           <td>
-            <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PATCH">
-              <button class="profile-actions-button">
-                <p>Switch</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                     class="bi bi-toggle-on" viewBox="0 0 16 16">
-                  <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-                </svg>
-              </button>
+            <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PATCH" class="toggle-form">
+              <label class="toggle-switch toggle-switch-role">
+                <input type="checkbox" th:checked="${user.role.name() == 'ADMIN'}" onchange="this.form.submit()">
+                <span class="toggle-slider">
+                  <span class="toggle-icon toggle-icon-on">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span class="toggle-icon toggle-icon-off">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </span>
+                <span class="toggle-label" th:text="${user.role.getDisplayName()}">User</span>
+              </label>
             </form>
           </td>
         </tr>
