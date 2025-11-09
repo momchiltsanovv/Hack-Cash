@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,7 +110,8 @@
               </svg>
             </a>
           </div>
-          <div class="func-block">
+          <hr class="navbar-divider">
+          <div class="func-block logout-block">
             <a class="logout" href="/logout">
               <p>Logout</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +154,7 @@
           </td>
           <td th:text="${#temporals.format(user.createdOn, 'dd MMM YYYY HH:mm')}">11 Dec 2024 21:09</td>
           <td>
-<!--            /users/4531a4c8-87d0-4e47-a42a-532ec4e85451/status-->
+            <!--            /users/4531a4c8-87d0-4e47-a42a-532ec4e85451/status-->
             <form th:action="@{'/users/' + ${user.id} + '/status'}" th:method="PATCH">
               <button class="profile-actions-button">
                 <p>Switch</p>
