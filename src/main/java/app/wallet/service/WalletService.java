@@ -177,7 +177,7 @@ public class WalletService {
 
         Wallet wallet = getById(walletId);
 
-        if (wallet.getStatus() == WalletStatus.INACTIVE) {
+        if (wallet.getStatus() == WalletStatus.DEACTIVATED) {
 
             return transactionService.createNewTransaction(wallet.getOwner(),
                                                            SMART_WALLET_IDENTIFIER,
@@ -287,7 +287,7 @@ public class WalletService {
             if (wallet.isMain()) {
                 throw new RuntimeException("Primary wallets can't be inactive!");
             }
-            wallet.setStatus(WalletStatus.INACTIVE);
+            wallet.setStatus(WalletStatus.DEACTIVATED);
         } else {
             wallet.setStatus(WalletStatus.ACTIVE);
         }
