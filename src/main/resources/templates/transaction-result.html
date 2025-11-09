@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"><head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -91,7 +91,8 @@
             </svg>
           </a>
         </div>
-        <div class="func-block">
+        <hr class="navbar-divider">
+        <div class="func-block logout-block">
           <a class="logout" href="/logout">
             <p>Logout</p>
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -122,12 +123,12 @@
           </div>
           <div class="details">
             <span class="item">Amount:</span>
-              <span class="value" th:text="${transaction.amount} + ' ' + ${wallet.currency.currencyCode}">2.04 EUR</span>
+            <span class="value" th:text="${transaction.amount} + ' ' + ${wallet.currency.currencyCode}">2.04 EUR</span>
           </div>
         </div>
       </div>
 
-<!--      THIS MUST BE SHOWN IN CASE OF TRANSACTION FAILURE-->
+      <!--      THIS MUST BE SHOWN IN CASE OF TRANSACTION FAILURE-->
       <div class="payment-box failure" th:if="${transaction.status.name() == 'FAILED'}">
         <div class="payment-header">
           <div class="icon">
@@ -154,7 +155,7 @@
       <div class="details-section">
         <div class="details-section-container">
           <strong>Transaction id: </strong>
-          <p th:text="${transaction.id}"></p>
+          <p th:text="${#strings.substring(transaction.id, 0, 6)}">0afa07</p>
         </div>
       </div>
 

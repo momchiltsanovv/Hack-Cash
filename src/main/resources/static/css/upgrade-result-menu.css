@@ -3,7 +3,7 @@
     margin: 0 auto;
     text-align: center;
     padding-inline: 20px 30px;
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .payment-result-container {
@@ -80,22 +80,23 @@
 
 .payment-box .payment-header h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: white;
     margin: 0 0 10px;
 }
 
 .payment-box .payment-header p {
     font-size: 0.8rem;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .payment-box .payment-details {
-    background: #f4f4f4;
+    background: rgba(0, 0, 0, 0.2);
     padding: 15px;
     width: 80%;
     justify-self: center;
     border-radius: 8px;
     margin-bottom: 20px;
+    border: 1px solid rgba(147, 51, 234, 0.2);
 }
 
 .payment-box .details {
@@ -106,16 +107,68 @@
 
 .payment-box .details .item {
     font-size: 14px;
-    color: #555;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .payment-box .details .value {
     font-size: 12px;
-    color: #333;
+    color: white;
 }
 
 .details-section {
     margin-bottom: 20px;
+}
+
+.details-section-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-section-container strong {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.details-section-container p {
+    margin: 0;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.profile-actions-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #9333ea, #fb923c);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
+}
+
+.profile-actions-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(147, 51, 234, 0.5);
+}
+
+.profile-actions-button p {
+    margin: 0;
+    color: white;
+}
+
+.profile-actions-button svg {
+    stroke: white;
 }
 
 .home-section {

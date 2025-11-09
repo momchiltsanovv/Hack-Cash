@@ -1,6 +1,9 @@
+/* Subscription History Page - Modern Purple/Gradient Design */
+
 .home-section {
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .single-section-box.subscriptions-container {
@@ -8,37 +11,46 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  overflow: hidden;
-
-}
-
-.single-section-box.subscriptions-container::before,
-.single-section-box.subscriptions-container::after {
-  content: '';
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  border-radius: 90%;
-  opacity: 0.7;
-  filter: blur(40px);
-  z-index: 1;
+  max-width: 1400px;
+  overflow: visible;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.08) 0%, rgba(249, 115, 22, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(147, 51, 234, 0.25);
+  border-radius: 28px;
+  padding: 32px;
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .single-section-box.subscriptions-container::before {
-  width: 350px;
-  height: 190px;
-  background: radial-gradient(circle, #ff60d745, #679fff);
-  top: -90px;
+  content: '';
+  display: block;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(80px);
+  z-index: -1;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.4), transparent);
+  top: -100px;
   left: -100px;
+  pointer-events: none;
 }
 
 .single-section-box.subscriptions-container::after {
-  width: 400px;
-  height: 130px;
-  background: radial-gradient(circle, rgb(135 102 255 / 47%), #ff676780);
-  bottom: -40px;
-  right: -180px;
+  content: '';
+  display: block;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(80px);
+  z-index: -1;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.3), transparent);
+  bottom: -100px;
+  right: -100px;
+  pointer-events: none;
 }
 
 .centered {
@@ -46,17 +58,100 @@
 }
 
 .status {
-  display: inline;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  background: transparent;
-  border: transparent;
+  display: inline-block;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.status.active,
-.status.terminated,
+.status.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.status.terminated {
+  background: rgba(156, 163, 175, 0.2);
+  color: #dfe4ec;
+  border: 1px solid rgba(156, 163, 175, 0.4);
+}
+
 .status.completed {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.styled-table thead {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(249, 115, 22, 0.15));
+}
+
+.styled-table thead th {
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px;
+  border-bottom: 2px solid rgba(147, 51, 234, 0.3);
   background: transparent;
-  box-shadow: none;
-  border: transparent;
+}
+
+.styled-table tbody td {
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.styled-table tbody tr:hover {
+  background: rgba(147, 51, 234, 0.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .styled-table {
+    font-size: 13px;
+  }
+
+  .styled-table thead th,
+  .styled-table tbody td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .single-section-box.subscriptions-container {
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  .styled-table {
+    min-width: 700px;
+  }
+
+  .styled-table thead th,
+  .styled-table tbody td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
 }
