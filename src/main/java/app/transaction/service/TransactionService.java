@@ -58,7 +58,7 @@ public class TransactionService {
 
     public List<Transaction> getAllByUserId(UUID userId) {
 
-        return transactionRepository.findAllByOwnerId(userId);
+        return transactionRepository.findAllByOwnerIdOrderByCreatedOnDesc(userId);
     }
 
     public List<Transaction> getLastFourTransactions(Wallet wallet) {
